@@ -1,0 +1,19 @@
+{
+  "name": "@renderx-plugins/canvas",
+  "version": "0.1.0-rc.0",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --out-dir dist --clean --external @renderx-plugins/canvas",
+    "test": "vitest --run --config vitest.config.ts"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  }
+}
