@@ -1,21 +1,46 @@
 {
   "name": "@renderx-plugins/canvas",
-  "version": "0.1.0-rc.0",
-  "private": false,
+  "version": "0.1.0-rc.2",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
   "type": "module",
+  "keywords": [
+    "renderx-plugin"
+  ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm --out-dir dist --clean --external @renderx-plugins/canvas",
+    "build": "tsup src/index.ts --format esm --out-dir dist --clean --external react,react-dom,@renderx-plugins/host-sdk,@renderx-plugins/manifest-tools",
     "test": "vitest --run --config vitest.config.ts"
   },
   "exports": {
     ".": {
-      "import": "./src/index.ts"
+      "import": "./dist/index.js"
     }
+  },
+  "renderx": {
+    "plugins": [
+      {
+        "id": "CanvasPlugin",
+        "ui": {
+          "slot": "canvas",
+          "module": "@renderx-plugins/canvas",
+          "export": "CanvasPage"
+        },
+        "runtime": {
+          "module": "@renderx-plugins/canvas",
+          "export": "register"
+        }
+      }
+    ]
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.43.0",
     "@typescript-eslint/parser": "^8.43.0",
     "eslint": "^9.35.0",
+    "jsdom": "^27.0.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "tsup": "^8.5.0",

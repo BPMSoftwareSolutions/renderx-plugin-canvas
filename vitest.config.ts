@@ -6,5 +6,11 @@ export default defineConfig({
     globals: true,
     include: ['__tests__/**/*.spec.ts'],
   },
+  define: {
+    'import.meta.vitest': 'undefined',
+  },
+  esbuild: {
+    target: 'node14'
+  },
 });
 

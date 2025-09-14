@@ -32,28 +32,12 @@ vi.mock("@renderx-plugins/host-sdk", () => {
   } as any;
 });
 
-// NOTE: Temporary tolerance for the private prerelease where the published package
-// is a thin re-export that doesn't resolve in node_modules context.
-// TODO(#129): Remove the try/catch once @renderx-plugins/canvas publishes a proper dist with exports.
+import * as pkg from '../src/index';
 
-describe('@renderx-plugins/canvas package exports', () => {
-  it('exposes CanvasPage and register()', async () => {
-    let pkg: any;
-    try {
-      // Import from the built dist folder instead of the package name
-      pkg = await import('../dist/index.js');
-    } catch (e) {
-      const msg = String(e || '');
-      if (msg.includes("plugins/canvas/index") || msg.includes("host-sdk")) {
-        // Known private prerelease packaging issue or missing external deps; tolerate for now
-        expect(true).toBe(true);
-        return;
-      }
-      throw e;
-    }
-
-    expect(typeof pkg.register).toBe('function');
-    // CanvasPage is a React component function; we just assert it is defined
-    expect(typeof pkg.CanvasPage).toBe('function');
-  }, 30000);
+describe('@renderx-plugins/canvas: UI export + register()', () => {
+  it('exports CanvasPage and register()', async () => {
+    expect(typeof (pkg as any).CanvasPage).toBe('function');
+    expect(typeof (pkg as any).register).toBe('function');
+  });
 });
+
