@@ -1,6 +1,6 @@
 {
   "name": "@renderx-plugins/canvas",
-  "version": "0.1.0-rc.2",
+  "version": "0.1.0-rc.3",
   "publishConfig": {
     "access": "public"
   },

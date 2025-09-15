@@ -63,14 +63,9 @@ export function AppShell() {
 
 This split ensures: smaller bundle for host embedding, clearer performance boundaries, and independent versioning of heavy logic.
 
-## Contributing (Local Monorepo)
-Source of truth currently resides in `plugins/canvas/ui/*`. During extraction each file will migrate into this package's `src/` directory and the re-export indirection will be removed.
 
-Recommended loop:
-1. Modify a UI element under `plugins/canvas/ui`.
-2. Run `npm run dev` (or `npm run build:packages`).
-3. Exercise drag/drop & exports in the host demo.
-4. Add/adjust corresponding interaction tests under root test suites.
+## Contributing
+To contribute, modify UI elements in the `src/ui/` directory, run `npm run dev` to start the development server, and test drag/drop and export features in your local environment. Add or adjust corresponding interaction tests under the root test suites as needed.
 
 ## Testing Notes
 The component favors event publication over internal state, so unit tests assert on emitted topics / interaction invocations rather than DOM mutation. Use `onDropForTest` to simulate pointer operations without constructing full DragEvent objects.
