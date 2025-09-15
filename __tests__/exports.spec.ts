@@ -1,36 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
-
-// Mock host SDK to make this package-level test self-contained
-vi.mock("@renderx-plugins/host-sdk", () => {
-  return {
-    useConductor: () => null,
-    isFlagEnabled: () => false,
-    EventRouter: {
-      publish: () => {
-        throw new Error("no router");
-      },
-      subscribe: () => () => {}, // Return unsubscribe function
-    },
-    resolveInteraction: (key: string) => {
-      if (key === "library.component.drop") {
-        return { pluginId: "LibraryComponentDropPlugin", sequenceId: "library-component-drop-symphony" };
-      }
-      if (key === "canvas.component.select") {
-        return { pluginId: "CanvasComponentPlugin", sequenceId: "canvas-component-select-symphony" };
-      }
-      if (key === "canvas.component.export") {
-        return { pluginId: "CanvasComponentPlugin", sequenceId: "canvas-component-export-symphony" };
-      }
-      if (key === "canvas.component.export.gif") {
-        return { pluginId: "CanvasComponentPlugin", sequenceId: "canvas-component-export-gif-symphony" };
-      }
-      if (key === "canvas.component.export.mp4") {
-        return { pluginId: "CanvasComponentPlugin", sequenceId: "canvas-component-export-mp4-symphony" };
-      }
-      throw new Error("Unknown interaction key: " + key);
-    },
-  } as any;
-});
+import { describe, it, expect } from 'vitest';
 
 // NOTE: Temporary tolerance for the private prerelease where the published package
 // is a thin re-export that doesn't resolve in node_modules context.
@@ -40,12 +8,11 @@ describe('@renderx-plugins/canvas package exports', () => {
   it('exposes CanvasPage and register()', async () => {
     let pkg: any;
     try {
-      // Import from the built dist folder instead of the package name
-      pkg = await import('../dist/index.js');
+      pkg = await import('@renderx-plugins/canvas');
     } catch (e) {
       const msg = String(e || '');
-      if (msg.includes("plugins/canvas/index") || msg.includes("host-sdk")) {
-        // Known private prerelease packaging issue or missing external deps; tolerate for now
+      if (msg.includes("plugins/canvas/index")) {
+        // Known private prerelease packaging issue; tolerate for now
         expect(true).toBe(true);
         return;
       }
